@@ -9,6 +9,10 @@
   height: 2rem;
 }
 
-.active {
+.player {
   background-color: aquamarine;
+}
+
+.food {
+  background-color: yellow;
 }

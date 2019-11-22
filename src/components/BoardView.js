@@ -1,7 +1,7 @@
 import React from 'react'
 import Row from './Row'
 
-const Board = ({ board }) => {
+const BoardView = ({ board }) => {
   
   return (
     <div className="board">
@@ -12,4 +12,4 @@ const Board = ({ board }) => {
   )
 }
 
-export default Board
+export default BoardView

@@ -7,7 +7,7 @@ const Row = ({ row }) => {
       {row.map((token, i) => (
         <div 
           key={i}
-          className={token ? "tile active" : "tile"}
+          className={token ? (token === 1 ? "tile player" : "tile food") : "tile"}
         >
         </div>
       ))}
