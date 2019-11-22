@@ -1,0 +1,14 @@
+.board {
+  display: flex;
+}
+
+.tile {
+  border-style: solid;
+  border-width: 0.025rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.active {
+  background-color: aquamarine;
+}
