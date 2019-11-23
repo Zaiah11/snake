@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import BoardView from './BoardView'
 import { generateBoard } from '../game/generateBoard' 
+import GameOver from './GameOver'
 
 const App = () => {
   const [ direction, setDirection ] = useState(null)
@@ -33,20 +34,20 @@ const App = () => {
     const { x, y } = head
     tail.forEach(coordinates => {
       if (coordinates.x === x && coordinates.y === y && !coordinates.isNew) {
-        console.log('player ran into self')
-        return setGameOver(true)
+        return playerDied('player ran into self')
       }
     })
-    if (y < 0 || y > board.length - 1) {
-      console.log('player exceeded board boundaries')
-      return setGameOver(true)
-    }
-    if (x < 0 || x > board[0].length - 1) {
-      console.log('player exceeded board boundaries')
-      return setGameOver(true)
+    if (y < 0 || y > board.length - 1 || x < 0 || x > board[0].length - 1) {
+      return playerDied('player exceeded board boundaries')
     }
     updateBoard()
     didPlayerEat()
+  }
+
+  const playerDied = (msg) => {
+    console.log(msg)
+    window.localStorage.setItem('snakeHighScore', playerLoc.length)
+    setGameOver(true)
   }
 
   const generateNewFood = () => {
@@ -126,8 +127,8 @@ const App = () => {
   }, [playerLoc, setFood])
 
   return (
-    <div>
-      {gameOver ? <div>game over</div> 
+    <div className="gameView">
+      {gameOver ? <GameOver player={playerLoc}/>
       : <BoardView board={board}/>}
     </div>
   )
