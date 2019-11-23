@@ -6,7 +6,7 @@ const App = () => {
   const [ direction, setDirection ] = useState(null)
   const [ gameOver, setGameOver ] = useState(false)
   const [ gameInitialized, setGameInitialized ] = useState(false)
-  const [ board, setBoard ] = useState(generateBoard())
+  const [ board, setBoard ] = useState(() => generateBoard())
   const [ playerLoc, setPlayerLoc ] = useState([{ x: Math.floor(board[0].length / 2), y: Math.floor(board.length / 2), isNew: true }])
   const [ food, setFood ] = useState({ x: 2, y: 2 })
 
@@ -67,7 +67,9 @@ const App = () => {
     if (key === 'w') newDirection = 'UP'
     if (key === 's') newDirection = 'DOWN'
     setDirection(previous => {
-      if (previous !== newDirection) updatePlayerLoc(newDirection)
+      if (previous !== newDirection) {
+        updatePlayerLoc(newDirection)
+      }
       return newDirection
     })
   }
@@ -98,22 +100,25 @@ const App = () => {
     setBoard(newBoard)
   }
 
-  const step = (newDirection) => {
-    updatePlayerLoc(newDirection)
-    setTimeout(() => {
-      setDirection(direction => {
-        setGameOver(gameOver => {
-          if (!gameOver) step(direction)
-          return gameOver
-        }) 
-        return direction
+  let step;
+
+  const handleStep = () => {
+    console.log(true)
+    setDirection(direction => {
+      updatePlayerLoc(direction)
+      setGameOver(gameOver => {
+        if (gameOver) endStep()
+        return gameOver
       })
-    }, 500)
+      return direction
+    })
   }
+
+  const endStep = () => clearInterval(step)
 
   useEffect(() => {
     if (!gameInitialized) {
-      // step(direction)
+      step = setInterval(handleStep, 250)
       document.addEventListener('keydown', updateDirection)
       setGameInitialized(true)
     }
