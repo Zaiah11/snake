@@ -28,12 +28,23 @@ const App = () => {
   }
 
   const didPlayerDie = () => {
-    const [{ x, y, isNew }, ...tail ] = playerLoc
+    const tail = playerLoc.slice(0, playerLoc.length - 1)
+    const head = playerLoc[playerLoc.length - 1]
+    const { x, y } = head
     tail.forEach(coordinates => {
-      if (coordinates.x === x && coordinates.y === y && !isNew) setGameOver(true)
+      if (coordinates.x === x && coordinates.y === y && !coordinates.isNew) {
+        console.log('player ran into self')
+        return setGameOver(true)
+      }
     })
-    if (y < 0 || y > board.length - 1) return setGameOver(true)
-    if (x < 0 || x > board[0].length - 1) return setGameOver(true)
+    if (y < 0 || y > board.length - 1) {
+      console.log('player exceeded board boundaries')
+      return setGameOver(true)
+    }
+    if (x < 0 || x > board[0].length - 1) {
+      console.log('player exceeded board boundaries')
+      return setGameOver(true)
+    }
     updateBoard()
     didPlayerEat()
   }
@@ -46,7 +57,6 @@ const App = () => {
       }
     }
     const idx = Math.floor(Math.random() * (possible.length - 1))
-    console.log(idx, possible.length)
     setFood(possible[idx])
   }
 
@@ -66,12 +76,12 @@ const App = () => {
     setPlayerLoc(previousLoc => {
       return previousLoc.map((coordinates, i) => {
         if (i === previousLoc.length - 1) {
-          let { x, y } = coordinates
+          let { x, y, isNew } = coordinates
           if (direction === 'LEFT') y = y - 1
           if (direction === 'RIGHT') y = y + 1
           if (direction === 'UP') x = x - 1
           if (direction === 'DOWN') x = x + 1
-          return { x, y }
+          return { x, y, isNew }
         }
         return previousLoc[i + 1]
       })
@@ -92,15 +102,18 @@ const App = () => {
     updatePlayerLoc(newDirection)
     setTimeout(() => {
       setDirection(direction => {
-        step(direction)
+        setGameOver(gameOver => {
+          if (!gameOver) step(direction)
+          return gameOver
+        }) 
         return direction
       })
-    }, 250)
+    }, 500)
   }
 
   useEffect(() => {
     if (!gameInitialized) {
-      step(direction)
+      // step(direction)
       document.addEventListener('keydown', updateDirection)
       setGameInitialized(true)
     }
