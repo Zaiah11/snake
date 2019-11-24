@@ -64,14 +64,15 @@ const Game = ({ settings }) => {
     setFood(possible[idx])
   }
 
-  const updateDirection =({ key }) => {
+  const updateDirection = ({ key }) => {
     let newDirection = ''
-    if (key === 'a') newDirection = 'LEFT'
-    if (key === 'd') newDirection = 'RIGHT'
-    if (key === 'w') newDirection = 'UP'
-    if (key === 's') newDirection = 'DOWN'
+    if (key === 'a' || key === 'ArrowLeft') newDirection = 'LEFT'
+    if (key === 'd' || key === 'ArrowRight') newDirection = 'RIGHT'
+    if (key === 'w' || key === 'ArrowUp') newDirection = 'UP'
+    if (key === 's' || key === 'ArrowDown') newDirection = 'DOWN'
     setDirection(previous => {
       if (previous !== newDirection) {
+        console.log(previous, newDirection)
         updatePlayerLoc(newDirection)
       }
       return newDirection
