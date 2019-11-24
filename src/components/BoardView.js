@@ -1,8 +1,7 @@
 import React from 'react'
 import Row from './Row'
-import Controller from './Controller'
 
-const BoardView = ({ board, updateDirection }) => {
+const BoardView = ({ board }) => {
   
   return (
     <div className="boardView">
@@ -12,7 +11,6 @@ const BoardView = ({ board, updateDirection }) => {
           <Row row={row} key={i}/>
         ))}
       </div>
-      <Controller updateDirection={updateDirection}/>
     </div>
   )
 }
