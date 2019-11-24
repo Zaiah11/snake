@@ -142,7 +142,7 @@ const Game = ({ settings }) => {
   return (
     <div className="gameView">
       {gameOver ? <GameOver player={playerLoc}/>
-      : <BoardView board={board}/>}
+      : <BoardView updateDirection={updateDirection} board={board}/>}
     </div>
   )
 }
