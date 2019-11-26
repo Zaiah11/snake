@@ -72,7 +72,6 @@ const Game = ({ settings }) => {
     if (key === 's' || key === 'ArrowDown') newDirection = 'DOWN'
     setDirection(previous => {
       if (previous !== newDirection) {
-        console.log(previous, newDirection)
         updatePlayerLoc(newDirection)
       }
       return newDirection
@@ -129,7 +128,6 @@ const Game = ({ settings }) => {
       'NIGHTMARE': 50
     }
     const rate = difficulties[difficulty]
-    console.log(rate)
     step = setInterval(handleStep, rate)
     document.addEventListener('keydown', updateDirection)
     setGameInitialized(true)
