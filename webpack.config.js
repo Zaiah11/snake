@@ -1,9 +1,9 @@
 module.exports = {
   mode: 'production',
-  entry: `${__dirname}/src/index.js`,
+  entry: `${__dirname}/client/src/index.js`,
   output: {
     filename: 'bundle.js',
-    path: `${__dirname}/public`
+    path: `${__dirname}/client/public`
   },
   module: {
     rules: [

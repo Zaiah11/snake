@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "startAPI": "nodemon ./api/server/index.js",
+    "startCLI": "nodemon ./client/server.js",
+    "build": "webpack --watch"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Zaiah11/snake.git"
